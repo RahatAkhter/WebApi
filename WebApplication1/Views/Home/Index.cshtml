@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            
+
+            $.getJSON("/api/SaveData", function (data) {
+
+
+                    var xmlDoc = $.parseXML(data);
+
+
+                    $("#ShowTable").empty();
+
+                    $("#ShowTable").append("<table border=1 ><thead><tr><th>Roll No</th></tr></thead><tbody></tbody></table>");
+                    $(xmlDoc).find('Table').each(function () {
+                        $("#ShowTable table tbody").append("<tr><td>" + $(this).find('emp_Name').text() + "</td></tr>");
+
+                    })
+               
+            })
+        });
+        function func() {
+            alert("agaya");
+            var name = $('#name').val();
+
+            $.getJSON("/api/SaveData?edit=" + name , function (data) {
+                alert(data);
+            })
+        }
+
+
+
+
+    </script>
+
+
+</head>
+<body>
+    <div>
+        <input type="text" id="name" />
+        <button onclick="func();">Save</button>
+    </div>
+    <div id="ShowTable"></div>
+</body>
+</html>
